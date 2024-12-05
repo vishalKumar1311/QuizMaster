@@ -78,9 +78,9 @@ public class QuizResultService {
         return quizResultRepository.save(quizResult);
     }
 
-    public ResultDTO getResult(int userId, int quizId) {
+    public ResultDTO getResult(int userId) {
 
-        QuizResult quizResult = quizResultRepository.findByUserIdAndQuizId(userId, quizId);
+        QuizResult quizResult = quizResultRepository.findByUserId(userId);
 
         List<QuestionResult> questionResults = questionResultRepository.findByQuizResultId(quizResult.getId());
 
@@ -103,6 +103,37 @@ public class QuizResultService {
                                                                                               return dto;
                                                                                           })
                                                                                           .collect(Collectors.toList());
+
+        response.setQuestionResults(questionResultDTOs);
+
+        return response;
+
+    }
+    public ResultDTO getResultByQuiz(int quizId) {
+
+        QuizResult quizResult = quizResultRepository.findByQuizId(quizId);
+
+        List<QuestionResult> questionResults = questionResultRepository.findByQuizResultId(quizResult.getId());
+
+        ResultDTO response = new ResultDTO();
+        response.setId(quizResult.getId());
+        response.setUserId(quizResult.getUserId());
+        response.setQuizId(quizResult.getQuizId());
+        response.setScore(quizResult.getScore());
+        response.setTimeTaken(quizResult.getTimeTaken());
+        response.setStartTime(quizResult.getStartTime());
+        response.setEndTime(quizResult.getEndTime());
+
+        // Map each QuestionResult to QuestionResultDTO
+        List<ResultDTO.QuestionResultDTO> questionResultDTOs = questionResults.stream()
+                                                                              .map(questionResult -> {
+                                                                                  ResultDTO.QuestionResultDTO dto = new ResultDTO.QuestionResultDTO();
+                                                                                  dto.setQuestionId(questionResult.getQuestionId());
+                                                                                  dto.setUserAnswer(questionResult.getUserAnswer());
+                                                                                  dto.setCorrectAnswer(questionResult.getCorrectAnswer());
+                                                                                  return dto;
+                                                                              })
+                                                                              .collect(Collectors.toList());
 
         response.setQuestionResults(questionResultDTOs);
 

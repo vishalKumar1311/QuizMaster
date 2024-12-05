@@ -52,12 +52,22 @@ public class QuizResultController {
     }
 
     // Endpoint to retrieve result for a specific user and quiz
-    @GetMapping("/getResult/{userId}/{quizId}")
+    @GetMapping("/getResult/{userId}")
     public ResponseEntity<ResultDTO> getResult(
-            @PathVariable int userId,
+            @PathVariable int userId
+    ) {
+        ResultDTO result = quizResultService.getResult(userId);
+        if (result != null) {
+            return new ResponseEntity<ResultDTO>(result, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<ResultDTO>(HttpStatus.NOT_FOUND);
+        }
+    }
+    @GetMapping("/getResultByQ/{quizId}")
+    public ResponseEntity<ResultDTO> getResultByQuiz(
             @PathVariable int quizId
     ) {
-        ResultDTO result = quizResultService.getResult(userId, quizId);
+        ResultDTO result = quizResultService.getResultByQuiz(quizId);
         if (result != null) {
             return new ResponseEntity<ResultDTO>(result, HttpStatus.OK);
         } else {

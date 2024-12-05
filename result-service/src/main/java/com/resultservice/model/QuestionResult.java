@@ -11,7 +11,6 @@ import jakarta.persistence.*;
 public class QuestionResult {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
