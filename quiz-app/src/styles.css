@@ -1,0 +1,122 @@
+/* Global Body Styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f7f7f7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+/* Main App Styles */
+.app {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  text-align: center;
+}
+
+/* Apply Box Style to Entire Quiz Page */
+.quiz-page {
+  background-color: white;
+  padding: 20px;
+  margin: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 100%; /* Ensures the page takes full width */
+  max-width: 600px; /* Optional, limit the max width */
+  text-align: center;
+}
+
+/* Question Card Styles (Inside Quiz Page) */
+.question-card {
+  margin-bottom: 20px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Options Layout and Styling */
+.options {
+  display: flex;
+  flex-direction: column;
+}
+
+.option {
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.option:hover {
+  background-color: #f0f0f0;
+}
+
+/* Correct/Incorrect Answer Styles */
+.option.correct {
+  background-color: #4caf50;
+  color: white;
+}
+
+.option.incorrect {
+  background-color: #f44336;
+  color: white;
+}
+
+/* Button Disabled State */
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Next Button Styling */
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:disabled {
+  background-color: #ccc;
+}
+
+/* Score Styling */
+.score {
+  margin-top: 20px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* Home Page Styling */
+.home-page {
+  text-align: center;
+}
+
+.quiz-link {
+  display: block;
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 18px;
+}
+
+.quiz-link:hover {
+  background-color: #0056b3;
+}
+/* src/styles.css */
+
