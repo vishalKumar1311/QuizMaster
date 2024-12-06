@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resultservice
+  labels:
+    app: resultservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: resultservice
+  template:
+    metadata:
+      labels:
+        app: resultservice
+    spec:
+      containers:
+        - name: resultservice
+          image: vishalconfigdoc/resultservice:latest  # Replace with your Spring Boot Docker image
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:mysql://mysql:3306/resultservice?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+            - name: SPRING_DATASOURCE_USERNAME
+              value: root
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: mySQL@abc  # Set the MySQL password here
+            - name: SPRING_JPA_HIBERNATE_DDL_AUTO
+              value: update
+          ports:
+            - containerPort: 8082
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: resultservice
+spec:
+  selector:
+    app: resultservice
+  ports:
+    - protocol: TCP
+      port: 8082
+      targetPort: 8082
