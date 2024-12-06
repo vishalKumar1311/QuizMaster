@@ -14,13 +14,13 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
 
-  question-service:
+  resultservice:
     image: resultservice
     container_name: resultservice
     depends_on:
       - mysql
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-container:3306/resultservice?useSSL=false&serverTimezone=UTC
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-container-result:3306/resultservice?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: mySQL@abc
     ports:
