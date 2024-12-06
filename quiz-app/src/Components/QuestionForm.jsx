@@ -1,44 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const QuestionForm = () => {
+  const [id, setId] = useState(''); // New state for the ID field
   const [questionText, setQuestionText] = useState('');
   const [correctAnswer, setCorrectAnswer] = useState('');
   const [category, setCategory] = useState('');
   const [difficulty, setDifficulty] = useState('easy');
   const [questionType, setQuestionType] = useState('MULTIPLE_CHOICE');
   const [options, setOptions] = useState(['']);
-  const [questionId, setQuestionId] = useState(null); // Store question ID (for editing)
 
   const navigate = useNavigate();
-  const { questionIdParam } = useParams(); // Get questionId from the URL (if editing)
-
-  useEffect(() => {
-    if (questionIdParam) {
-      // Fetch the question by ID for editing
-      axios
-        .get(`http://localhost:8081/questions/getQuestion/${questionIdParam}`)
-        .then((response) => {
-          const { data } = response;
-          setQuestionId(data.id);
-          setQuestionText(data.questionText);
-          setCorrectAnswer(data.correctAnswer);
-          setCategory(data.category);
-          setDifficulty(data.difficulty);
-          setQuestionType(data.questionType);
-          setOptions(data.choices || []);
-        })
-        .catch((error) => {
-          console.error('Error fetching question:', error);
-        });
-    }
-  }, [questionIdParam]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const newQuestion = {
+      id, // Include the new id in the payload
       questionText,
       correctAnswer,
       category,
@@ -48,18 +27,9 @@ const QuestionForm = () => {
     };
 
     try {
-      if (questionId) {
-        // Editing an existing question
-        await axios.put(
-          `http://localhost:8081/questions/updateQuestion/${questionId}`,
-          newQuestion
-        );
-        alert('Question updated successfully');
-      } else {
-        // Adding a new question
-        await axios.post('http://localhost:8081/questions/addQuestion', newQuestion);
-        alert('Question added successfully');
-      }
+      // Adding a new question
+      await axios.post('http://localhost:8081/questions/addQuestion', newQuestion);
+      alert('Question added successfully');
       navigate('/teacher-dashboard/questions/list'); // Redirect to the question list after submit
     } catch (err) {
       console.error('Error submitting the question:', err);
@@ -84,13 +54,12 @@ const QuestionForm = () => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label>Question ID (Required)</label>
+        <label>Question ID (Optional)</label>
         <input
           type="text"
-          value={questionId || ''}
-          onChange={(e) => setQuestionId(e.target.value)}
-          required
-          disabled={!!questionId} // Disable ID field if editing
+          value={id}
+          onChange={(e) => setId(e.target.value)}
+          placeholder="Enter question ID (optional)"
         />
       </div>
 
@@ -170,7 +139,7 @@ const QuestionForm = () => {
       )}
 
       <button type="submit">
-        {questionId ? 'Edit Question' : 'Add Question'}
+        Add Question
       </button>
     </form>
   );

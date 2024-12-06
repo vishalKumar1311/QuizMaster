@@ -36,17 +36,13 @@ public class QuizResultController {
         try {
             LocalDateTime start = LocalDateTime.parse(startTime);
             LocalDateTime end = LocalDateTime.parse(endTime);
-
-            if(quizResultRepository.findByUserIdAndQuizId(userId,quizId)!=null){
-                QuizResult result = quizResultService.submitAnswers(userId, quizId, answers, start, end);
-                return new ResponseEntity<QuizResult>(result, HttpStatus.CREATED);
-            }else{
-                return new ResponseEntity<QuizResult>(HttpStatus.BAD_REQUEST);
-            }
+            QuizResult result = quizResultService.submitAnswers(userId, quizId, answers, start, end);
+            return new ResponseEntity<QuizResult>(result, HttpStatus.CREATED);
 
 
 
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return new ResponseEntity<QuizResult>(HttpStatus.BAD_REQUEST);
         }
     }

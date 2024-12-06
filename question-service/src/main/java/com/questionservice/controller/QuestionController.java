@@ -1,5 +1,6 @@
 package com.questionservice.controller;
 import com.questionservice.model.Question;
+import com.questionservice.repository.QuestionRepository;
 import com.questionservice.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -7,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/questions")
@@ -14,6 +16,9 @@ public class QuestionController {
 
     @Autowired
     private QuestionService questionService;
+
+    @Autowired
+    private QuestionRepository questionRepository;
 
     @PostMapping("/addQuestion")
     public ResponseEntity<Question> addQuestion(@RequestBody Question question) {
@@ -35,6 +40,14 @@ public class QuestionController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT); // or return empty list
         }
         return new ResponseEntity<>(questions, HttpStatus.OK);
+    }
+    @GetMapping("/category")
+    public List<String> getAllCategories() {
+        List<Question> questions = questionRepository.findAll();
+        return questions.stream()
+                        .map(Question::getCategory)
+                        .distinct()  // Ensures unique categories
+                        .collect(Collectors.toList());
     }
 
     // 3. Get Questions by Category
@@ -80,4 +93,7 @@ public class QuestionController {
         questionService.deleteQuestion(questionId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+
+
 }

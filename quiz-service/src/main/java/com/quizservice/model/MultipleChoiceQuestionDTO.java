@@ -1,8 +1,12 @@
 package com.quizservice.model;
 
+import org.springframework.data.mongodb.core.mapping.Field;
+
 import java.util.List;
 
 public class MultipleChoiceQuestionDTO extends QuestionDTO {
+
+    @Field("multiple_choices")
     private List<String> choices;
 
     // Constructor
