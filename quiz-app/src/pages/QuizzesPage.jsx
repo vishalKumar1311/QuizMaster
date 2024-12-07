@@ -18,12 +18,10 @@ function QuizzesPage() {
 
   return (
     <div className="quizzes-page">
-      <h2>Create and Manage Quizzes</h2>
 
       <QuizForm createQuiz={createQuiz} questions={questions} />
 
       <div className="quizzes-list">
-        <h3>Existing Quizzes</h3>
         <ul>
           {quizzes.map((quiz, index) => (
             <li key={index}>

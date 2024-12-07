@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import './HomePage.css';
 
@@ -13,7 +13,7 @@ function HomePage() {
   useEffect(() => {
     const fetchQuizzes = async () => {
       try {
-        const response = await fetch('http://localhost:8080/getAllQuizzes'); // Replace with your backend URL
+        const response = await fetch('http://localhost:8080/getAllQuizzes');
         if (!response.ok) {
           throw new Error('Failed to fetch quizzes');
         }
@@ -35,6 +35,12 @@ function HomePage() {
   const handleStartQuiz = () => {
     if (selectedQuiz) {
       navigate(`/quiz/${selectedQuiz}`);
+    }
+  };
+
+  const handleViewResult = () => {
+    if (selectedQuiz) {
+      navigate(`/result/${selectedQuiz}`);
     }
   };
 
@@ -60,9 +66,14 @@ function HomePage() {
                 </option>
               ))}
             </select>
-            <button onClick={handleStartQuiz} disabled={!selectedQuiz}>
-              Start Quiz
-            </button>
+            <div className="button-group">
+              <button onClick={handleStartQuiz} disabled={!selectedQuiz}>
+                Start Quiz
+              </button>
+              <button onClick={handleViewResult} disabled={!selectedQuiz}>
+                View Result
+              </button>
+            </div>
           </>
         )}
       </div>

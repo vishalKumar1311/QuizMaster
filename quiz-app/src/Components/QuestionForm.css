@@ -1,28 +1,92 @@
-/* src/components/QuestionForm.css */
-
-form {
+body {
+  font-family: 'Arial', sans-serif;
   display: flex;
-  flex-direction: column;
-  width: 300px;
-  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
 }
 
-input, select {
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #ddd;
+.form-container {
+  background: #fff;
+  padding: 20px 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  width: 600px; /* Increased max-width for a wider form */
+  text-align: center;
+}
+
+h2 {
+  font-size: 26px; /* Slightly larger header font size */
+  color: #333;
+  margin-bottom: 25px;
+  position: relative;
+}
+
+h2::after {
+  content: '';
+  display: block;
+  width: 60px; /* Slightly longer underline */
+  height: 2px;
+  background: #4a90e2;
+  margin: 10px auto 0;
+}
+
+.form-group {
+  margin-bottom: 20px; /* More space between fields */
+  text-align: left;
+  width:100%
+}
+
+label {
+  display: block;
+  font-size: 16px; /* Larger label font size */
+  color: #555;
+  margin-bottom: 8px; /* More space between label and input */
+}
+
+input,
+select {
+  width: 100%;
+  padding: 12px; /* Increased padding for larger fields */
+  font-size: 16px; /* Larger input text */
+  border: 1px solid #ccc;
   border-radius: 5px;
+  box-sizing: border-box;
 }
 
-button {
-  padding: 10px 20px;
-  background-color: #007bff;
+input:focus,
+select:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
+}
+
+.option-group {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.add-option-btn,
+.remove-option-btn,
+.submit-btn {
   color: white;
+  padding: 12px 20px; /* Larger buttons */
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  margin-top: 10px;
 }
 
-button:hover {
-  background-color: #0056b3;
+.add-option-btn:hover,
+.remove-option-btn:hover,
+.submit-btn:hover {
+  background-color: #3d7bc3;
+}
+
+.submit-btn {
+  width: 100%; /* Full-width submit button */
+  font-size: 16px; /* Larger button font size */
 }

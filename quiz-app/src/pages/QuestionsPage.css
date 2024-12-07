@@ -38,7 +38,7 @@ form div {
 form input, form select {
   padding: 8px;
   margin-top: 5px;
-  width: 200px;
+  width: 100%;
   border-radius: 5px;
   border: 1px solid #ccc;
 }

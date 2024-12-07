@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './QuizForm.css';
 
 function QuizForm() {
   const [quizId, setQuizId] = useState('');
@@ -14,7 +15,6 @@ function QuizForm() {
   const [isLoadingCategories, setIsLoadingCategories] = useState(true);
   const [isLoadingQuestions, setIsLoadingQuestions] = useState(false);
 
-  // Fetch categories from backend on component mount
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -29,7 +29,6 @@ function QuizForm() {
     fetchCategories();
   }, []);
 
-  // Fetch questions based on selected category
   useEffect(() => {
     if (!selectedCategory) return;
 
@@ -49,26 +48,18 @@ function QuizForm() {
     fetchQuestions();
   }, [selectedCategory]);
 
-  // Handle question selection
   const handleQuestionSelect = (questionId) => {
     setSelectedQuestions((prevSelected) =>
       prevSelected.includes(questionId)
-        ? prevSelected.filter((id) => id !== questionId) // Remove if already selected
-        : [...prevSelected, questionId] // Add if not selected
+        ? prevSelected.filter((id) => id !== questionId)
+        : [...prevSelected, questionId]
     );
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (
-      !quizId ||
-      !quizName ||
-      !timeLimit ||
-      !selectedCategory ||
-      selectedQuestions.length === 0
-    ) {
+    if (!quizId || !quizName || !timeLimit || !selectedCategory || selectedQuestions.length === 0) {
       alert('Please fill all fields and select at least one question.');
       return;
     }
@@ -86,7 +77,6 @@ function QuizForm() {
     try {
       const response = await axios.post('http://localhost:8080/quizzes', newQuiz);
       alert(`Quiz created successfully! ID: ${response.data.id}`);
-      // Clear form
       setQuizId('');
       setQuizName('');
       setDifficultyLevel('easy');
@@ -102,51 +92,57 @@ function QuizForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ maxWidth: '600px', margin: '0 auto' }}>
-      <h2>Create a New Quiz</h2>
-      <div>
-        <input
-          type="text"
-          placeholder="Quiz ID"
-          value={quizId}
-          onChange={(e) => setQuizId(e.target.value)}
-          required
-        />
-      </div>
-      <div>
-        <input
-          type="text"
-          placeholder="Quiz Name"
-          value={quizName}
-          onChange={(e) => setQuizName(e.target.value)}
-          required
-        />
-      </div>
-      <div>
-        <select value={difficultyLevel} onChange={(e) => setDifficultyLevel(e.target.value)}>
-          <option value="easy">Easy</option>
-          <option value="medium">Medium</option>
-          <option value="hard">Hard</option>
-        </select>
-      </div>
-      <div>
-        <input
-          type="number"
-          placeholder="Time Limit (seconds)"
-          value={timeLimit}
-          onChange={(e) => setTimeLimit(e.target.value)}
-          required
-        />
-      </div>
-      <div>
-        <select value={quizType} onChange={(e) => setQuizType(e.target.value)}>
-          <option value="SHORT_ANSWER">Short Answer</option>
-          <option value="MULTIPLE_CHOICE">Multiple Choice</option>
-        </select>
-      </div>
-      <div>
-        <label>
-          Select Category:
+    <div className="quiz-form-container">
+      <form onSubmit={handleSubmit}>
+        <h2>Create a New Quiz</h2>
+
+        <div className="form-group">
+          <input
+            type="text"
+            placeholder="Quiz ID"
+            value={quizId}
+            onChange={(e) => setQuizId(e.target.value)}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <input
+            type="text"
+            placeholder="Quiz Name"
+            value={quizName}
+            onChange={(e) => setQuizName(e.target.value)}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <select value={difficultyLevel} onChange={(e) => setDifficultyLevel(e.target.value)}>
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+          </select>
+        </div>
+
+        <div className="form-group">
+          <input
+            type="number"
+            placeholder="Time Limit (seconds)"
+            value={timeLimit}
+            onChange={(e) => setTimeLimit(e.target.value)}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <select value={quizType} onChange={(e) => setQuizType(e.target.value)}>
+            <option value="SHORT_ANSWER">Short Answer</option>
+            <option value="MULTIPLE_CHOICE">Multiple Choice</option>
+          </select>
+        </div>
+
+        <div className="form-group">
+          <label>Select Category:</label>
           {isLoadingCategories ? (
             <p>Loading categories...</p>
           ) : (
@@ -163,39 +159,39 @@ function QuizForm() {
               ))}
             </select>
           )}
-        </label>
-      </div>
+        </div>
 
-      {selectedCategory && (
-        <>
-          <h4>Select Questions</h4>
-          {isLoadingQuestions ? (
-            <p>Loading questions...</p>
-          ) : questions.length > 0 ? (
-            <ul style={{ maxHeight: '200px', overflowY: 'auto' }}>
-              {questions.map((q) => (
-                <li key={q.id}>
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={selectedQuestions.includes(q.id)}
-                      onChange={() => handleQuestionSelect(q.id)}
-                    />
-                    {q.questionText}
-                  </label>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>No questions found for this category</p>
-          )}
-        </>
-      )}
+        {selectedCategory && (
+          <>
+            <h4>Select Questions</h4>
+            {isLoadingQuestions ? (
+              <p>Loading questions...</p>
+            ) : questions.length > 0 ? (
+              <ul className="questions-list">
+                {questions.map((q) => (
+                  <li key={q.id}>
+                    <label>
+                      <input
+                        type="checkbox"
+                        checked={selectedQuestions.includes(q.id)}
+                        onChange={() => handleQuestionSelect(q.id)}
+                      />
+                      {q.questionText}
+                    </label>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>No questions found for this category</p>
+            )}
+          </>
+        )}
 
-      <button type="submit" style={{ marginTop: '20px' }}>
-        Create Quiz
-      </button>
-    </form>
+        <button type="submit" className="submit-btn">
+          Create Quiz
+        </button>
+      </form>
+    </div>
   );
 }
 

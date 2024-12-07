@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: resultservice
-          image: vishalconfigdoc/resultservice:latest  # Replace with your Spring Boot Docker image
+          image: vishalconfigdoc/result-service:latest  # Replace with your Spring Boot Docker image
           env:
             - name: SPRING_DATASOURCE_URL
               value: jdbc:mysql://mysql-service:3306/resultservice?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true

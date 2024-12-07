@@ -26,8 +26,6 @@ function QuestionsPage() {
 
   return (
     <div className="questions-page">
-      <h2>Manage Questions</h2>
-
       <QuestionForm
         addQuestion={addQuestion}
         editQuestion={editQuestion}
@@ -35,7 +33,6 @@ function QuestionsPage() {
       />
 
       <div className="questions-list">
-        <h3>Questions List</h3>
         <ul>
           {questions.map((q, index) => (
             <li key={index}>

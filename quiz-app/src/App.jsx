@@ -9,6 +9,7 @@ import QuestionsPage from './pages/QuestionsPage';
 import QuizzesPage from './pages/QuizzesPage';
 import QuestionForm from './components/QuestionForm';
 import QuestionList from './components/QuestionList';
+import ResultPage from './pages/ResultPage';
 import './styles.css';
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
         <Route path="/home" element={<HomePage />} />
         <Route path="/teacher-dashboard/questions" element={<QuestionsPage />} />
         <Route path="/teacher-dashboard/quizzes" element={<QuizzesPage />} />
+        <Route path="/result/:quizId" element={<ResultPage />} />
       </Routes>
     </Router>
   );
